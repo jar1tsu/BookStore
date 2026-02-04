@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fi">
+<head>
+    <meta charset="UTF-8" />
+    <title>Kirjat</title>
+    <style>
+        body { font-family: system-ui, Arial, sans-serif; margin: 2rem; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { padding: .5rem .75rem; border-bottom: 1px solid #ddd; text-align: left; }
+        th { background: #f7f7f7; }
+    </style>
+</head>
+<body>
+<h1>Kirjat</h1>
+
+<p>
+    <a th:href="@{/books/add}">Lisää uusi kirja</a>
+</p>
+
+<table>
+    <thead>
+    <tr>
+        <th>Otsikko</th>
+        <th>Kirjoittaja</th>
+        <th>Vuosi</th>
+        <th>ISBN</th>
+        <th>Hinta</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="b : ${books}">
+        <td th:text="${b.title}">Title</td>
+        <td th:text="${b.author}">Author</td>
+        <td th:text="${b.publicationYear}">Year</td>
+        <td th:text="${b.isbn}">ISBN</td>
+        <td th:text="${#numbers.formatDecimal(b.price, 1, 'COMMA', 2, 'POINT')}">0.00</td>
+
+        <td>
+            <a th:href="@{'/books/delete/' + ${b.id}}" style="margin-right: 12px;"
+               onclick="return confirm('Haluatko varmasti poistaa kirjan \'[[${b.title}]]\'?');">
+               Poista
+            </a>
+            <a th:href="@{'/books/edit/' + ${b.id}}">Muokkaa</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
