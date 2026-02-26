@@ -1,9 +1,13 @@
-package bookstore.model;
+package bookstore.domain;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Book {
@@ -15,6 +19,12 @@ private String author;
 private int publicationYear;
 private String isbn;
 private double price;
+
+@JsonIgnoreProperties("books")
+@ManyToOne
+@JoinColumn(name = "category_id")
+private Category category;
+
 
 public Book() {}
 
@@ -67,6 +77,12 @@ public double getPrice() {
 }
 public void setPrice(double price) {
     this.price = price;
+}
+public Category getCategory() {
+    return category;
+}
+public void setCategory(Category category) {
+    this.category = category;
 }
 @Override
 public String toString() {
