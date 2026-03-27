@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="fi">
+<html  xmlns:th="http://www.thymeleaf.org" lang="fi"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" />
     <title>Kirjat</title>
@@ -11,6 +12,14 @@
     </style>
 </head>
 <body>
+
+<p>
+    Hei, <span sec:authentication="name"></span>!
+    <form th:action="@{/logout}" method="post" style="display: inline;">
+        <button type="submit">Kirjaudu ulos</button>
+    </form>
+</p>
+
 <h1>Kirjat</h1>
 
 <p>
@@ -38,10 +47,12 @@
         <td th:text="${b.category != null ? b.category.name : 'No Category'}"></td>
 
         <td>
+            <span sec:authorize="hasRole('ADMIN')">
             <a th:href="@{'/books/delete/' + ${b.id}}" style="margin-right: 12px;"
                onclick="return confirm('Haluatko varmasti poistaa kirjan \'[[${b.title}]]\'?');">
                Poista
             </a>
+            </span>
             <a th:href="@{'/books/edit/' + ${b.id}}">Muokkaa</a>
         </td>
     </tr>
