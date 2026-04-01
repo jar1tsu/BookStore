@@ -6,10 +6,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import bookstore.domain.Book;
 import bookstore.domain.BookRepository;
 import bookstore.domain.CategoryRepository;
+import bookstore.domain.User;
+import bookstore.domain.UserRepository;
+
 
 
 
@@ -22,7 +26,7 @@ public class BookstoreApplication {
     }
 
     @Bean
-    public CommandLineRunner bookDemo(BookRepository bookRepository, CategoryRepository categoryRepository) {
+    public CommandLineRunner bookDemo(BookRepository bookRepository, CategoryRepository categoryRepository, UserRepository userRepository) {
     return (args) -> {
 
         if (categoryRepository.count() == 0) {
@@ -40,6 +44,13 @@ public class BookstoreApplication {
         log.info("haetaan kaikki kirjat");
         for (Book book : bookRepository.findAll()) {
             log.info(book.toString());
+        }
+
+        if (userRepository.count()== 0) {
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            userRepository.save(new User("user", encoder.encode("user123"), "user@example.com", "ROLE_USER"));
+            userRepository.save(new User("admin", encoder.encode("admin123"), "admin@example.com", "ROLE_ADMIN"));
+            log.info("Käyttäjät luotu tietokantaan");
         }
     };
 
