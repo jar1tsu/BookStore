@@ -20,11 +20,12 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests((authorize) -> authorize
             .requestMatchers("/login").permitAll()
-            
-            .requestMatchers("/h2-console/**").permitAll()
             .requestMatchers("/books/delete/**").hasRole("ADMIN")
             .anyRequest().authenticated())
             .httpBasic(Customizer.withDefaults())
+
+            .csrf((csrf) -> csrf
+            .ignoringRequestMatchers("/books/delete**"))
 
             .formLogin((form) -> form
             .loginPage("/login")
