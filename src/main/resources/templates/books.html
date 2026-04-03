@@ -48,10 +48,12 @@
 
         <td>
             <span sec:authorize="hasRole('ADMIN')">
-            <a th:href="@{'/books/delete/' + ${b.id}}" style="margin-right: 12px;"
-            th:onclick="'return confirm(\'Haluatko varmasti poistaa kirjan ' + ${b.title} + '?\')'">
-            Poista
-            </a>
+                <a th:href="@{'/books/delete/' + ${b.id}}" 
+                   style="margin-right: 12px;"
+                   th:data-title="${b.title}"
+                   onclick="return confirm('Haluatko varmasti poistaa kirjan \'' + this.dataset.title + '\'?');">
+                   Poista
+                </a>
             </span>
             <a th:href="@{'/books/edit/' + ${b.id}}">Muokkaa</a>
         </td>
