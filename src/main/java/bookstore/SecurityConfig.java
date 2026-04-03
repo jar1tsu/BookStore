@@ -25,7 +25,7 @@ public class SecurityConfig {
             .httpBasic(Customizer.withDefaults())
 
             .csrf((csrf) -> csrf
-            .ignoringRequestMatchers("/books/delete**"))
+            .ignoringRequestMatchers("/books/delete/**"))
 
             .formLogin((form) -> form
             .loginPage("/login")
