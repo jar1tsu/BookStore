@@ -19,21 +19,17 @@ public class SecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests((authorize) -> authorize
-            .requestMatchers("/login").permitAll()
-            .requestMatchers("/books/delete/**").hasRole("ADMIN")
-            .anyRequest().authenticated())
+                .requestMatchers("/login").permitAll()
+                .requestMatchers("/books/delete/**").hasRole("ADMIN")
+                .anyRequest().authenticated())
             .httpBasic(Customizer.withDefaults())
-
-            .csrf((csrf) -> csrf
-            .ignoringRequestMatchers("/books/delete/**"))
-
+            .csrf((csrf) -> csrf.disable())
             .formLogin((form) -> form
-            .loginPage("/login")
-            .defaultSuccessUrl("/books", true)
-            .permitAll())
-
+                .loginPage("/login")
+                .defaultSuccessUrl("/books", true)
+                .permitAll())
             .logout((logout) -> logout
-            .permitAll());
+                .permitAll());
 
             
         return http.build();
