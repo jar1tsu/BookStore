@@ -49,8 +49,8 @@
         <td>
             <span sec:authorize="hasRole('ADMIN')">
             <a th:href="@{'/books/delete/' + ${b.id}}" style="margin-right: 12px;"
-               onclick="return confirm('Haluatko varmasti poistaa kirjan \'[[${b.title}]]\'?');">
-               Poista
+            th:onclick="'return confirm(\'Haluatko varmasti poistaa kirjan ' + ${b.title} + '?\')'">
+            Poista
             </a>
             </span>
             <a th:href="@{'/books/edit/' + ${b.id}}">Muokkaa</a>
